@@ -1,5 +1,7 @@
 # UT Austin CS HTCondor Scripts and Notes
 
+More info on the cluster [https://www.cs.utexas.edu/facilities/documentation/condor](https://www.cs.utexas.edu/facilities/documentation/condor)
+
 # Important Notes
 
 There are two dedicated submit nodes: darmok.cs.utexas.edu and
