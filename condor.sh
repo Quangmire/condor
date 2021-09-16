@@ -5,7 +5,7 @@
 ################################################################################
 
 # Note that this won't always work outside of BASH
-CONDOR_SCRIPTS_DIR=`dirname $(realpath $BASH_SOURCE)`
+CONDOR_SCRIPTS_DIR=`dirname $(realpath $0)`
 
 # Prints the number of idle GPU machines
 alias gpu_idle="condor_status | grep eldar | grep Idle | wc -l"
