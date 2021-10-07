@@ -8,9 +8,14 @@ def submit_jobs(path, start, n, exp_name):
             # Default basename is just the filename without '.condor'
             batch_name = os.path.basename(line.strip())[:-len('.condor')]
 
+            # Assume two directories back
+            if exp_name is None:
+                cur_exp_name = line.strip().split(os.path.sep)[-3]
+            else:
+                cur_exp_name = exp_name
+
             # The double underscore is intentional for easy string splitting
-            if exp_name is not None:
-                batch_name = exp_name + '__' + batch_name
+            batch_name = cur_exp_name + '__' + batch_name
             os.system('condor_submit ' + line.strip() + ' -batch-name ' + batch_name)
 
 

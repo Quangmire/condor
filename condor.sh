@@ -34,6 +34,8 @@ alias condor_submit_batch="python3 $CONDOR_SCRIPTS_DIR/condor_submit_batch.py"
 
 alias condorize="python3 $CONDOR_SCRIPTS_DIR/condorize.py"
 
+alias prio="condor_userprio -g -allusers | awk -v user=\$USER '{if (\$1 ~ user || (\$2 != \"500.00\" && \$2 != \"1.00\")) {print \$0}}'"
+
 ################################################################################
 #                                                                              #
 #                                  GPU SETUP                                   #
