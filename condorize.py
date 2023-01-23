@@ -23,6 +23,7 @@ notification=Error
 notify_user={user}@cs.utexas.edu
 error={name}.CONDOR.ERR
 output={name}.CONDOR.OUT
+log={name}.CONDOR.LOG
 initial_dir={directory}
 executable={binary}
 

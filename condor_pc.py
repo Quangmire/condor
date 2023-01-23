@@ -44,4 +44,4 @@ for benchmark in BENCHES:
 
             # Generate the associated condor file for this job
             with open(os.path.join(scripts_dir, fn + '.condor'), 'w') as f:
-                print(generate(gpu=False, init_dir=parent_dir, err_file=os.path.join(parent_dir, fn + '.ERR'), out_file=os.path.join(parent_dir, fn + '.OUT'), exe=sh_path), file=f)
+                print(generate(gpu=False, init_dir=parent_dir, err_file=os.path.join(parent_dir, fn + '.ERR'), out_file=os.path.join(parent_dir, fn + '.OUT'), log_file=os.path.join(parent_dir, fn + '.LOG', exe=sh_path), file=f)

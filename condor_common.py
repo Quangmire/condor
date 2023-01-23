@@ -12,6 +12,7 @@ notification=Error
 notify_user={user}@cs.utexas.edu
 error={err_file}
 output={out_file}
+log={log_file}
 initial_dir={init_dir}
 executable={exe}
 
@@ -34,8 +35,11 @@ notification=Error
 notify_user={user}@cs.utexas.edu
 error={err_file}
 output={out_file}
+log={log_file}
 initial_dir={init_dir}
 executable={exe}
+
+requirements=InMastodon
 
 queue
 """

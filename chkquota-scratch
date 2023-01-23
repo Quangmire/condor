@@ -1,0 +1,61 @@
+#!/lusr/bin/perl
+# Copied from /scratch/cluster/amy, written by Amy Bush
+
+use Quota;
+use Filesys::Df;
+
+$how_to_use="chkquota [loginname]\n";
+
+# we only want to take one argument
+
+$#ARGV >= 1 && die "$how_to_use";
+
+$user = $#ARGV < 0 ? $ENV{'LOGNAME'} : $ARGV[0];
+
+# get the users uid and gid
+($uid, $gid) = (getpwnam ($user))[2,3];
+$uid || die $how_to_use;
+
+$path = "/scratch/cluster/$user";
+
+print $path
+-d $path || die "$path: mount point not found\n";
+
+# need the mount point from getqcarg to feed query
+$dev = Quota::getqcarg($path);
+$dev || die "$path not mounted\n";
+
+#get the quota make it readable and print it
+($bc,$bs,$bh,$bt,$fc,$fs,$fh,$ft) = Quota::query($dev,$uid);
+if(defined($bc)) {
+  if ( $bh == -4 || $bh == 2147483644 ) {
+	print "Cannot determine quota on quotaless volume ... ESTIMATING\n";
+	$ref = df("$path");
+        $bh = $ref->{blocks};
+        $bc = $ref->{used};
+  } 
+  $usage = conv($bc);
+  $percent = sprintf ( "%.2f", ($bc / $bh) * 100 );
+  $limit = conv($bh);   
+
+print "Quota for $user (uid $uid): 
+Disk Limit: $limit
+Disk Usage: $usage ($percent%)
+";
+}
+
+sub conv {
+	local ($size) = @_;
+		if ( $size < 1024 ) {
+			return "$size KB"; 
+		} elsif ( $size < 1048576 ) {
+			$size = sprintf ("%.2f", $size /= 1024);
+			return "$size MB";
+		} elsif ( $size < 1073741824 ) {
+			$size = sprintf ("%.2f", ( $size /= 1024) /= 1024);
+			return "$size GB";
+		} else {
+			$size = sprintf ("%.2f", (( $size /= 1024) /= 1024) /= 1024);
+                        return "$size TB";
+		}
+}	
